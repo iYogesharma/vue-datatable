@@ -43,11 +43,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "YS\\VueDatatable\\DatatableServiceProvider"
-            ],
-            "aliases": {
-                "Datatable": "YS\\VueDatatable\\Facades\\Datatable"
-            }
+                "YS\\VueDatatable\\DataTableServiceProvider"
+            ]
         },
         "branch-alias": {
             "dev-master": "1.x-dev"

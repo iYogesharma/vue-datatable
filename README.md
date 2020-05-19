@@ -1,3 +1,8 @@
+[![Latest Stable Version](https://poser.pugx.org/iyogesharma/vue-datatable/v)](//packagist.org/packages/iyogesharma/vue-datatable)
+[![Latest Unstable Version](https://poser.pugx.org/iyogesharma/vue-datatable/v/unstable)](//packagist.org/packages/iyogesharma/vue-datatable)
+[![Total Downloads](https://poser.pugx.org/iyogesharma/vue-datatable/downloads)](//packagist.org/packages/iyogesharma/vue-datatable)
+[![Daily Downloads](https://poser.pugx.org/iyogesharma/vue-datatable/d/daily)](//packagist.org/packages/iyogesharma/vue-datatable)
+[![License](https://poser.pugx.org/iyogesharma/vue-datatable/license)](//packagist.org/packages/iyogesharma/vue-datatable)
 # Vue DataTable For Laravel 
 A simple package to ease DataTable server side handling
 
@@ -33,7 +38,7 @@ vue-datatables also includes some other helper funcions that you can use if you 
     return collection(User::all());
 ```
 
-##Input Format
+## Input Format
 
 ```javascript
 
