@@ -33,7 +33,7 @@ vue-datatables also includes some other helper funcions that you can use if you 
     return collection(User::all());
 ```
 
-##Input Format
+## Input Format
 
 ```javascript
 
