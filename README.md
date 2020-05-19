@@ -82,7 +82,187 @@ Register provider and facade on your `config/app.php` file.
 ]
 
 ```
+## Example(Element-UI)
+```vue
+  <template>
+    <div class="app">
+      <div class="filter-container">
+        <el-input
+          v-model="query.keyword"
+          style="width: 200px;"
+          class="filter-item"
+          clearable
+          @clear="resetKeyword"
+          @keyup.enter.native="handleFilter"
+        />
+        <el-select
+          v-model="query.filters[`users.role_id`]"
+          clearable
+          style="width: 90px"
+          class="filter-item "
+          @clear="resetFilters"
+          @change="handleFilter"
+        >
+          <el-option
+            v-for="role in roles"
+            :key="role.id"
+            :label="role.name"
+            :value="role.id"
+          />
+        </el-select>
+        <el-button
+            class="filter-item"
+            type="primary"
+            icon="el-icon-search"
+            @click="handleFilter"
+          >
+           search
+          </el-button>
+      </div>
+      <el-table
+        v-loading="loading"
+        :data="data"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%"
+        @sort-change="sortList"
+        >
+          <el-table-column
+            sortable="custom"
+            prop="name"
+            align="center"
+            label="name"
+          >
+            <template slot-scope="scope">
+              <span>{{ scope.row.name }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            sortable
+            align="center"
+            prop="email"
+           label="eamil"
+          >
+            <template slot-scope="scope">
+              <span>{{ scope.row.email }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            sortable
+            align="center"
+            prop="role"
+           label="role"
+          >
+            <template slot-scope="scope">
+              <span>{{ scope.row.role }}</span>
+            </template>
+          </el-table-column>
+        </el-table>
+     </div>
+  </template>
+  <script>
+      export default {
+        name: 'vue-datatable-test',
+        data() {
+          return {
+            data: null,
+            total: 0,
+            roles: [
+                {
+                  id:1,
+                  name: 'admin',
+                },
+                {
+                  id:2,
+                  name:'sub-admin'
+                }
+            ],
+            query: {
+             page: 1,
+             limit: 10,
+             keyword: '',
+             order: {
+               column: '',
+               direction: '',
+             },
+             filters: {},
+           }
+          }
+        },
+        created () {
+          this.getDataFromStorage();
+        },
+        methods: {
+          async getDataFromStorage(){
+            let self = this;
+            await axios.get('/testUrl', {
+              params: self.query
+            })
+            .then( res => {
+              const { data, total } = res.data;
+              self.data = data;
+              self.total = total;
+            })
+          },
+          /**
+           * Handle tabel filter action
+           * @param data value of current filter
+           *
+           * @return void
+           */
+          handleFilter(data) {
+            if (data === '') {
+              this.resetFilters();
+            }
+            this.query.page = 1;
+            this.getDataFromStorage();
+          },
+        
+          /**
+           * Reset query filters to initial values
+           * @return {void}
+           */
+          resetFilters() {
+            this.query.filters = {};
+          },
+        
+          /**
+           * Reset query search keyword to initial value
+           * @return {void}
+           */
+          resetKeyword() {
+            this.query.keyword = '';
+            this.getDataFromStorage();
+          },
+        
+          /**
+           * Handle sort action of table
+           * @param {object} data sort details
+           *
+           * @return {void}
+           */
+          sortList(data) {
+            const { prop, order } = data;
+            if (order){
+              if (prop === 'index') {
+                this.$refs['table'].data.sort(() => -1);
+              } else {
+                this.query.order['column'] = prop;
+                this.query.order['direction'] = order;
+                this.handleFilter();
+              }
+            }
+          }
+        }
+        
+      }
 
+  </script>
+```
+
+In the example given above you can also use component "el-pagination".
+<b>keys</b>  total, query.limit and query.page  can be used to create dynamic pagination.
 ## License
 
 The MIT License (MIT). Please see [License File](https://github.com/iYogesharma/datatables/blob/master/LICENSE.md) for more information.
