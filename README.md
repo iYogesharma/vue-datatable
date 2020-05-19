@@ -261,6 +261,21 @@ Register provider and facade on your `config/app.php` file.
   </script>
 ```
 
+```php
+
+On server side use vueDataTable as
+
+function testData()
+{
+    return datatable(
+    User::join('roles','roles.id','=','users.role_id')
+        ->select('users.name','users.email','users.id','users.role_id','roles.name as role')
+    );
+}
+
+```
+
+
 In the example given above you can also use component "el-pagination".
 <b>keys</b>  total, query.limit and query.page  can be used to create dynamic pagination.
 ## License
