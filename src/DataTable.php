@@ -199,7 +199,34 @@
          */
         protected function setFilters()
         {
-            $this->query = $this->query->where($this->request->getFilters());
+            $filters = $this->request->getFilters();
+            $this->query = $this->query->where($filters['basic']);
+            if( count($filters['array']) > 0 )
+            {
+                $this->setArrayFilters( $filters['array']);
+            }
+        
+        }
+    
+        /**
+         * set array filter conditions on query
+         *
+         * @param array $filters
+         */
+        protected function setArrayFilters( array $filters )
+        {
+            foreach($filters as $k => $v )
+            {
+                if( strpos($k,'_at') !== true || strpos($k,'date') !== true || strpos($k,'time') !== true)
+                {
+                    $this->query =  $this->query->whereBetween($k,$v);
+                }
+                else
+                {
+                    $this->query =  $this->query->whereIn($k,$v);
+                }
+            
+            }
         }
         
         /**
