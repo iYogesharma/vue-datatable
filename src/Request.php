@@ -99,6 +99,15 @@
          * @return array
          */
         public function getFilters(){
-            return  json_decode($this->request->input('filters'),true) ;
+            $filters =  json_decode($this->request->input('filters'),true) ;
+            $arrayFilters = [];
+            foreach($filters as $k=>$v) {
+                if(gettype($v) === 'array') {
+                    $arrayFilters[$k] = $v;
+                    unset($filters[$k]);
+                }
+            }
+    
+            return [ 'basic' => $filters, 'array' => $arrayFilters ];
         }
     }
