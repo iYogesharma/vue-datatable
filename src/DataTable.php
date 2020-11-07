@@ -215,7 +215,7 @@
          */
         protected function setArrayFilters( array $filters )
         {
-            foreach($filters as $k => $v )
+            foreach( $filters as $k => $v )
             {
                 if( count($v) > 0) 
                 {
@@ -223,7 +223,7 @@
                     {
                         $this->query = $this->query->whereBetween($k, $v);
                     }
-                    else 
+                    else
                     {
                         $this->query = $this->query->whereIn($k, $v);
                     }
