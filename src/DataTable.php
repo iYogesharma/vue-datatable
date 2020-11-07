@@ -215,17 +215,19 @@
          */
         protected function setArrayFilters( array $filters )
         {
-            foreach($filters as $k => $v )
+            foreach( $filters as $k => $v )
             {
-                if( strpos($k,'_at') !== true || strpos($k,'date') !== true || strpos($k,'time') !== true)
+                if( count($v) > 0) 
                 {
-                    $this->query =  $this->query->whereBetween($k,$v);
+                    if (strpos($k, '_at') !== false || strpos($k, 'date') !== false || strpos($k, 'time') !== false) 
+                    {
+                        $this->query = $this->query->whereBetween($k, $v);
+                    }
+                    else
+                    {
+                        $this->query = $this->query->whereIn($k, $v);
+                    }
                 }
-                else
-                {
-                    $this->query =  $this->query->whereIn($k,$v);
-                }
-            
             }
         }
         
