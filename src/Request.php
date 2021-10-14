@@ -18,7 +18,11 @@
          */
         public function isOrderable()
         {
-            $this->order = json_decode( $this->request->input('order'),true);
+            $this->order = $this->request->input('order');
+            if( gettype($this->order) !== 'array' )
+            {
+                $this->order = json_decode( $this->request->input('order'),true);
+            }
             
             return  $this->order['column'] !='' && count($this->order) > 0;
         }
@@ -99,7 +103,11 @@
          * @return array
          */
         public function getFilters(){
-            $filters =  json_decode($this->request->input('filters'),true) ;
+           $filters = $this->request->input('filters');
+            if(gettype($this->request->input('filters')) !== 'array' )
+            {
+                $filters =  json_decode($this->request->input('filters'),true) ;
+            }
             $arrayFilters = [];
             foreach($filters as $k=>$v) {
                 if(gettype($v) === 'array') {
